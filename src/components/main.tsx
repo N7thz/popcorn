@@ -21,7 +21,7 @@ export const Main = () => {
 
   if (!result) return
 
-  const movies: Movie[] = result.results
+  const { results: movies } = result
 
   return (
     <div className="min-h-screen flex flex-col justify-center">
