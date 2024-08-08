@@ -1,8 +1,7 @@
 "use client"
 
 import { useSession } from "next-auth/react"
-import { Card, CardHeader, CardTitle } from "./ui/card"
-import { Avatar, AvatarImage } from "./ui/avatar"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { ButtonsLogin } from "./button-login"
 
 export const CardInfoUser = () => {
@@ -11,19 +10,14 @@ export const CardInfoUser = () => {
 
     if (!data || !data.user) return <ButtonsLogin />
 
-    const { user: { image, name } } = data
-
     return (
-        <Card className="w-full flex items-center border-none my-6">
+        <Card className="w-full h-4/5 flex flex-col border-none my-6">
             <CardHeader>
-                <CardTitle>{name}</CardTitle>
+                <CardTitle>My list:</CardTitle>
             </CardHeader>
-            <Avatar className="size-20 -translate-x-4">
-                <AvatarImage
-                    src={image ?? "https://github.com/shadcn.png"}
-                    alt="@shadcn"
-                />
-            </Avatar>
+            <CardContent>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi consectetur minima id dignissimos expedita. Necessitatibus asperiores doloremque dicta dolores maxime et, distinctio possimus consequatur iure consectetur nobis eum ut magnam.
+            </CardContent>
         </Card>
     )
 }

@@ -1,3 +1,5 @@
+import { ComponentProps } from "react"
+
 export interface Result {
     page: number
     results: Movie[]
@@ -23,4 +25,8 @@ export interface Movie {
 export interface GetMoviesProps {
     order?: string
     page?: string
+}
+
+export interface GoogleProps extends ComponentProps<"svg"> {
+    size?: number
 }

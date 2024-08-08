@@ -1,11 +1,12 @@
 "use client"
 
+import { signOut, useSession } from "next-auth/react"
+import { LogOut } from "lucide-react"
 import { CardInfoUser } from "./card-info-user"
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar"
 import { Button } from "./ui/button"
 import {
     Sheet,
-    SheetClose,
     SheetContent,
     SheetDescription,
     SheetFooter,
@@ -13,32 +14,59 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "./ui/sheet"
+import { twMerge } from "tailwind-merge"
 
 export const SheetOptions = () => {
+
+    const { data } = useSession()
+
+    const url = (data && data.user && data.user.image)
+        ? data.user.image
+        : "https://github.com/shadcn.png"
+
     return (
         <Sheet>
             <SheetTrigger asChild>
                 <Avatar className="cursor-pointer">
                     <AvatarImage
-                        src="https://github.com/shadcn.png"
+                        src={url}
                         alt="@shadcn"
                     />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className={twMerge(
+                !data && "flex flex-col justify-between"
+            )}>
                 <SheetHeader>
-                    <SheetTitle>Edit profile</SheetTitle>
+                    <SheetTitle>
+                        {
+                            (data && data.user)
+                                ? `Hi, ${data.user.name}`
+                                : "Guest User"
+                        }
+                    </SheetTitle>
                     <SheetDescription>
-                        Make changes to your profile here. Click save when youre done.
+                        {
+                            (data && data.user)
+                                ? (data.user.email)
+                                : "Create an account to enjoy all features"
+                        }
                     </SheetDescription>
                 </SheetHeader>
                 <CardInfoUser />
-                <SheetFooter>
-                    <SheetClose asChild>
-                        <Button type="submit">Save changes</Button>
-                    </SheetClose>
-                </SheetFooter>
+                {
+                    data &&
+                    <SheetFooter>
+                        <Button
+                            onClick={() => signOut()}
+                            className="flex items-center gap-2"
+                        >
+                            <LogOut size={16} />
+                            Log-out
+                        </Button>
+                    </SheetFooter>
+                }
             </SheetContent>
         </Sheet>
     )

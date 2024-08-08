@@ -3,7 +3,15 @@
 import { api } from "@/hooks/use-service"
 import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react"
+import { 
+    Dispatch, 
+    ReactNode, 
+    SetStateAction, 
+    createContext, 
+    useContext, 
+    useEffect, 
+    useState 
+} from "react"
 
 interface ApplicationContextProps {
     status: "loading" | "authenticated" | "unauthenticated"
