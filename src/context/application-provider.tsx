@@ -1,16 +1,13 @@
 "use client"
 
-import { api } from "@/hooks/use-service"
-import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
-import { 
-    Dispatch, 
-    ReactNode, 
-    SetStateAction, 
-    createContext, 
-    useContext, 
-    useEffect, 
-    useState 
+import {
+    Dispatch,
+    ReactNode,
+    SetStateAction,
+    createContext,
+    useContext,
+    useState
 } from "react"
 
 interface ApplicationContextProps {
@@ -25,22 +22,14 @@ const ApplicationContext = createContext({} as ApplicationContextProps)
 
 export function ApplicationProvider({ children }: { children: ReactNode }) {
 
-    const [status, setStatus] = useState<
-        "loading" | "authenticated" | "unauthenticated"
-    >("unauthenticated")
+    let statusType: "loading" | "authenticated" | "unauthenticated"
+
+    const [status, setStatus] = useState<typeof statusType>("unauthenticated")
 
     const relativePath = "https://image.tmdb.org/t/p/original"
 
-    const { push } = useRouter()
-
-    useEffect(() => {
-        setStatus(status)
-        status === "authenticated" && push("/")
-        console.log(status)
-    }, [push, setStatus, status])
-
     const value: ApplicationContextProps = {
-        relativePath, 
+        relativePath,
         status, setStatus
     }
 

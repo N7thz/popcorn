@@ -1,5 +1,5 @@
 import { GetMoviesProps, Result } from "@/@types"
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
 
 export const api = axios.create({
     baseURL: "https://api.themoviedb.org",
@@ -8,15 +8,18 @@ export const api = axios.create({
     }
 })
 
-async function getMovies({ order = "desc", page = "1" }: GetMoviesProps) {
+async function getMovies({ order = "desc", page = "1" }: GetMoviesProps): Promise<Result> {
 
     const url = `/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=${page}&sort_by=popularity.${order}`
 
-    const response = await api.get(url)
+    const response = await api
+        .get(url)
+        .then(res => res.data)
+        .catch(err => console.log(err))
 
-    const data: Result = response.data
+    console.log(response)
 
-    return data
+    return response
 }
 
 export {

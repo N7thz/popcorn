@@ -1,4 +1,7 @@
-import { ComponentProps } from "react"
+import { ComponentProps, ReactNode } from "react"
+import { 
+    Target, VariantLabels, TargetAndTransition, Transition, AnimationControls 
+} from "framer-motion"
 
 export interface Result {
     page: number
@@ -29,4 +32,13 @@ export interface GetMoviesProps {
 
 export interface GoogleProps extends ComponentProps<"svg"> {
     size?: number
+}
+
+export interface AnimationProps extends ComponentProps<"div"> {
+	children: ReactNode
+	initial?: boolean | Target | VariantLabels
+	whileInView?: VariantLabels | TargetAndTransition
+	exit?: TargetAndTransition | VariantLabels
+	transition?: Transition
+	animate?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
 }

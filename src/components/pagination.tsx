@@ -7,30 +7,77 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
+import { useApplication } from "@/context/application-provider"
+import { useParams, useRouter } from "next/navigation"
+import { ComponentProps } from "react"
 
-export const PaginationComponent = () => {
+export const PaginationComponent = ({ className }: ComponentProps<"div">) => {
+
+    const { push } = useRouter()
+
+    const { page } = useParams<{ page: string }>()
+
+    const pageNumber = Number(page)
+
+    function paginationPrevious() {
+
+        if (pageNumber < 1) return
+
+        push(`/movies/${pageNumber - 1}`)
+    }
+
+    function paginationNext() {
+        push(`/movies/${pageNumber + 1}`)
+    }
+
     return (
-        <Pagination>
+        <Pagination className={className}>
             <PaginationContent>
                 <PaginationItem>
-                    <PaginationPrevious href="#" />
+                    <PaginationPrevious
+                        disabled={pageNumber < 2}
+                        onClick={paginationPrevious}
+                    />
                 </PaginationItem>
+                {
+                    pageNumber >= 2 &&
+                    <PaginationItem>
+                        <PaginationLink
+                            onClick={
+                                () => push(`/movies/${pageNumber - 1}`)
+                            }
+                        >
+                            {pageNumber - 1}
+                        </PaginationLink>
+                    </PaginationItem>
+                }
                 <PaginationItem>
-                    <PaginationLink href="#">1</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href="#" isActive>
-                        2
+                    <PaginationLink isActive>
+                        {page}
                     </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationLink href="#">3</PaginationLink>
+                    <PaginationLink
+                        onClick={() => push(`/movies/${pageNumber + 1}`)}
+                    >
+                        {pageNumber + 1}
+                    </PaginationLink>
                 </PaginationItem>
+                {
+                    pageNumber === 1 &&
+                    <PaginationItem>
+                        <PaginationLink
+                            onClick={() => push(`/movies/${pageNumber + 2}`)}
+                        >
+                            {pageNumber + 2}
+                        </PaginationLink>
+                    </PaginationItem>
+                }
                 <PaginationItem>
                     <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationNext href="#" />
+                    <PaginationNext onClick={paginationNext} />
                 </PaginationItem>
             </PaginationContent>
         </Pagination>
