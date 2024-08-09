@@ -1,12 +1,10 @@
-import { Main } from "@/components/main"
-import { Metadata } from "next"
+"use client"
 
-export const metadata: Metadata = {
-  title: "Popcorn App | Home"
-}
+import { useRouter } from "next/navigation"
 
 export default function Home() {
-  return (
-    <Main />
-  )
+
+  const { push } = useRouter()
+
+  return push("/movies/1")
 }

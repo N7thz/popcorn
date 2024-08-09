@@ -7,7 +7,6 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
-import { useApplication } from "@/context/application-provider"
 import { useParams, useRouter } from "next/navigation"
 import { ComponentProps } from "react"
 

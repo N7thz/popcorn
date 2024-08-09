@@ -16,7 +16,7 @@ export const authOptions: AuthOptions = {
         })
     ],
     pages: {
-        signIn: "/"
+        signIn: "/movies/1"
     }
 }
 
