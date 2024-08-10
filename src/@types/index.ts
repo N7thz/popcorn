@@ -105,3 +105,55 @@ export interface SpokenLanguage {
     iso_639_1: string
     name: string
 }
+
+export interface GenerateMetadataProps {
+    params: {
+        id: string
+    }
+}
+
+export interface ImagesResponse {
+    backdrops: Backdrop[]
+    id: number
+    logos: Backdrop[]
+    posters: Backdrop[]
+}
+
+export interface Backdrop {
+    aspect_ratio: number
+    height: number
+    iso_639_1?: string
+    file_path: string
+    vote_average: number
+    vote_count: number
+    width: number
+}
+
+export interface GenresMovieProps {
+    genres: Genre[]
+}
+
+export interface ReviewsResponse {
+    id: number
+    page: number
+    results: Reviews[]
+    total_pages: number
+    total_results: number
+}
+
+export interface Reviews {
+    author: string
+    author_details: AuthorDetails
+    content: string
+    created_at: string
+    id: string
+    updated_at: string
+    url: string
+}
+
+export interface AuthorDetails {
+    name: string
+    username: string
+    avatar_path?: string
+    rating: number
+}

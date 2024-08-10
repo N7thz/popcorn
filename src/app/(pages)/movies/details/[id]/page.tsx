@@ -1,13 +1,7 @@
-import type { MovieDetails as Props } from "@/@types"
+import type { GenerateMetadataProps, MovieDetails as Props } from "@/@types"
 import { MovieDetails } from "@/components/movie-details"
 import { api } from "@/hooks/use-service"
 import type { Metadata } from 'next'
-
-export interface GenerateMetadataProps {
-    params: {
-        id: string
-    }
-}
 
 export async function generateMetadata({
     params: { id }
@@ -20,15 +14,19 @@ export async function generateMetadata({
         .then(res => res.data)
         .catch(err => console.log(err))
 
-    const { original_title } = response
+    const { title } = response
 
     return {
-        title: original_title
+        title: title
     }
 }
 
 export default function Page() {
     return (
-        <MovieDetails />
+        <div
+            className="min-h-[calc(100vh-64px)] flex items-center justify-center"
+        >
+            <MovieDetails />
+        </div>
     )
 }
