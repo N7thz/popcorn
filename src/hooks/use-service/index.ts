@@ -1,6 +1,8 @@
 import {
+    CastResponse,
     GetMoviesProps, ImagesResponse, MovieDetails, Result,
-    ReviewsResponse
+    ReviewsResponse,
+    SimilarResponse
 } from "@/@types"
 import axios from "axios"
 
@@ -11,9 +13,9 @@ export const api = axios.create({
     }
 })
 
-async function getMovies({ order = "desc", page = "1" }: GetMoviesProps) {
+async function getMovies({ page = "1" }: GetMoviesProps) {
 
-    const url = `/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=${page}&sort_by=popularity.${order}`
+    const url = `/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc`
 
     const response: Result = await api
         .get(url)
@@ -22,7 +24,7 @@ async function getMovies({ order = "desc", page = "1" }: GetMoviesProps) {
 
     console.log(response.results)
 
-    return response
+    return response.results
 }
 
 async function getMovieById(id: string) {
@@ -61,9 +63,35 @@ async function getReviewsMovie(id: string) {
     return response.results
 }
 
+async function getCastMovie(id: string) {
+
+    const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`
+
+    const response: CastResponse = await api
+        .get(url)
+        .then(res => res.data)
+        .catch(err => console.log(err))
+
+    return response.cast
+}
+
+async function getSimilarMovies(id: string) {
+
+    const url = `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`
+
+    const response: SimilarResponse = await api
+        .get(url)
+        .then(res => res.data)
+        .catch(err => console.log(err))
+
+    return response.results
+}
+
 export {
     getMovies,
     getMovieById,
     getImagesMovie,
-    getReviewsMovie
+    getReviewsMovie,
+    getCastMovie,
+    getSimilarMovies
 }

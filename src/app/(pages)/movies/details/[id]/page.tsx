@@ -23,10 +23,6 @@ export async function generateMetadata({
 
 export default function Page() {
     return (
-        <div
-            className="min-h-[calc(100vh-64px)] flex items-center justify-center"
-        >
-            <MovieDetails />
-        </div>
+        <MovieDetails />
     )
 }

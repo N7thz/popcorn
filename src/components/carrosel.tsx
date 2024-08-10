@@ -15,14 +15,14 @@ export const Carousel = ({ id }: { id: string }) => {
 
     const { relativePath } = useApplication()
 
-    const { data: images } = useQuery({
-        queryKey: ['get-images'],
+    const { data: images, isLoading } = useQuery({
+        queryKey: ['get-images', id],
         queryFn: async () => getImagesMovie(id)
     })
 
-    if (!images) return
+    console.log(isLoading)
 
-    console.log(images)
+    if (!images) return
 
     return (
         <>

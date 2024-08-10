@@ -9,12 +9,17 @@ import {
     Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
 } from "./ui/card"
 import { Carousel } from "./carrosel"
-import Image from "next/image"
-import Link from "next/link"
 import { GenresMovie } from "./genres-movie"
 import { ScrollArea } from "./ui/scroll-area"
 import { Button } from "./ui/button"
 import { Reviews } from "./reviews"
+import { LoadingDetails } from "./loading-details"
+import { VoteAverage } from "./vote-average"
+import { Cast } from "./cast"
+import { Similar } from "./similar"
+import { Heart } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 
 export const MovieDetails = () => {
 
@@ -23,62 +28,97 @@ export const MovieDetails = () => {
     const { relativePath } = useApplication()
 
     const { data: result, isLoading } = useQuery({
-        queryKey: ['get-movie-by-id'],
+        queryKey: ['get-movie-by-id', id],
         queryFn: async () => getMovieById(id)
     })
 
-    if (!result || isLoading) return
+    if (!result || isLoading) return <LoadingDetails />
 
     const {
-        title, poster_path, overview, release_date, genres, homepage
+        title,
+        poster_path,
+        overview,
+        release_date,
+        genres,
+        homepage,
+        vote_average,
+        backdrop_path
     } = result
 
     const date = formatDate(release_date, "PPP")
 
     const url = relativePath + poster_path
-
-    console.log(result)
+    const background = relativePath + backdrop_path
 
     return (
-        <Card
-            className="w-10/12 h-[600px] flex rounded-lg overflow-hidden border-violet-600"
+        <div
+            className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-cover relative"
+            style={{ backgroundImage: `url('${background}')` }}
         >
-            <Image
-                src={url}
-                width={300}
-                height={300}
-                alt={`image ${title} details`}
-                className="w-1/2"
-            />
-            <ScrollArea
-                className="w-1/2 mim-h-full flex flex-col justify-between gap-6"
+            <div className="absolute inset-0 backdrop-blur-[5px]" />
+            <Card
+                className="w-10/12 h-[600px] flex rounded-lg overflow-hidden border-none z-50"
             >
-                <CardHeader className="flex flex-col gap-2">
-                    <CardTitle>
-                        {title}
-                    </CardTitle>
-                    <p>
-                        Release date: {date}
-                    </p>
-                    <CardDescription className="text-justify">
-                        {overview}
-                    </CardDescription>
-                </CardHeader>
-                <CardContent
-                    className="flex flex-col gap-6 mim-h-full"
+                <div className="w-1/2 h-full relative">
+                    <Image
+                        src={url}
+                        width={300}
+                        height={300}
+                        alt={`image ${title} details`}
+                        className="size-full"
+                    />
+                    <Heart
+                        className="absolute top-4 right-4 cursor-pointer size-8"
+                    />
+                </div>
+                <ScrollArea
+                    className="w-1/2 min-h-full flex flex-col justify-between gap-6"
                 >
-                    <GenresMovie genres={genres} />
-                    <Carousel id={id} />
-                    <Reviews />
-                </CardContent>
-                <CardFooter className="flex items-center justify-end">
-                    <Link href={homepage} target="_blank">
-                        <Button variant={"link"}>
-                            Home page
+                    <CardHeader className="flex flex-col gap-2">
+                        <CardTitle>
+                            {title}
+                        </CardTitle>
+                        <p>
+                            Release date: {date}
+                        </p>
+                        <CardDescription className="text-justify">
+                            {overview}
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent
+                        className="flex flex-col gap-6 mim-h-full"
+                    >
+                        <VoteAverage vote_average={vote_average} />
+                        <GenresMovie genres={genres} />
+                        <Carousel id={id} />
+                        <div className="flex flex-col gap-4">
+                            <Cast />
+                            <Reviews />
+                            <Similar />
+                        </div>
+                    </CardContent>
+                    <CardFooter className="flex items-center justify-end gap-4">
+                        <Button
+                            variant={"outline"}
+                            className="w-full"
+                        >
+                            Add to my list
                         </Button>
-                    </Link>
-                </CardFooter>
-            </ScrollArea>
-        </Card>
+                        <Link
+                            href={homepage}
+                            target="_blank"
+                            className="w-full"
+                        >
+                            <Button
+                                variant={"outline"}
+                                className="w-full"
+                            >
+                                Home page
+                            </Button>
+                        </Link>
+                    </CardFooter>
+                </ScrollArea>
+            </Card>
+        </div>
     )
 }

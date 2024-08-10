@@ -8,6 +8,27 @@ export interface Result {
     results: Movie[]
 }
 
+export interface ImagesResponse {
+    backdrops: Backdrop[]
+    id: number
+    logos: Backdrop[]
+    posters: Backdrop[]
+}
+
+export interface ReviewsResponse {
+    id: number
+    page: number
+    results: Reviews[]
+    total_pages: number
+    total_results: number
+}
+
+export interface CastResponse {
+    id: number
+    cast: Cast[]
+    crew: Cast[]
+}
+
 export interface Movie {
     adult: boolean
     backdrop_path: string
@@ -26,7 +47,6 @@ export interface Movie {
 }
 
 export interface GetMoviesProps {
-    order?: string
     page?: string
 }
 
@@ -112,13 +132,6 @@ export interface GenerateMetadataProps {
     }
 }
 
-export interface ImagesResponse {
-    backdrops: Backdrop[]
-    id: number
-    logos: Backdrop[]
-    posters: Backdrop[]
-}
-
 export interface Backdrop {
     aspect_ratio: number
     height: number
@@ -131,14 +144,6 @@ export interface Backdrop {
 
 export interface GenresMovieProps {
     genres: Genre[]
-}
-
-export interface ReviewsResponse {
-    id: number
-    page: number
-    results: Reviews[]
-    total_pages: number
-    total_results: number
 }
 
 export interface Reviews {
@@ -156,4 +161,47 @@ export interface AuthorDetails {
     username: string
     avatar_path?: string
     rating: number
+}
+
+export interface VoteAverageProps {
+    vote_average: number
+}
+
+export interface Cast {
+    adult: boolean
+    gender: number
+    id: number
+    known_for_department: string
+    name: string
+    original_name: string
+    popularity: number
+    profile_path?: string
+    cast_id: number
+    character: string
+    credit_id: string
+    order: number
+}
+
+export interface SimilarResponse {
+    page: number
+    results: Similar[]
+    total_pages: number
+    total_results: number
+}
+
+export interface Similar {
+    adult: boolean
+    backdrop_path: string
+    genre_ids: number[]
+    id: number
+    original_language: string
+    original_title: string
+    overview: string
+    popularity: number
+    poster_path: string
+    release_date: string
+    title: string
+    video: boolean
+    vote_average: number
+    vote_count: number
 }
