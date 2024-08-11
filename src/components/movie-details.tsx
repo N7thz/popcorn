@@ -9,10 +9,10 @@ import { Globe, Heart } from "lucide-react"
 import {
     Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
 } from "./ui/card"
-import { Carousel } from "./carrosel"
-import { GenresMovie } from "./genres-movie"
 import { ScrollArea } from "./ui/scroll-area"
 import { Button } from "./ui/button"
+import { Carousel } from "./carrosel"
+import { GenresMovie } from "./genres-movie"
 import { Reviews } from "./reviews"
 import { LoadingDetails } from "./loading-details"
 import { VoteAverage } from "./vote-average"
@@ -20,6 +20,7 @@ import { Cast } from "./cast"
 import { Similar } from "./similar"
 import { ButtonAddList } from "./button-add-list"
 import Image from "next/image"
+import { HeartIcon } from "./heart-icon"
 import Link from "next/link"
 
 export const MovieDetails = () => {
@@ -67,9 +68,7 @@ export const MovieDetails = () => {
                         alt={`image ${title} details`}
                         className="size-full"
                     />
-                    <Heart
-                        className="absolute top-4 right-4 cursor-pointer size-8"
-                    />
+                    <HeartIcon />
                 </div>
                 <ScrollArea
                     className="w-1/2 min-h-full flex flex-col justify-between gap-6"

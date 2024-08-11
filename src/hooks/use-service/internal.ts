@@ -1,4 +1,4 @@
-import { AddToMovieToMyListProps} from "@/@types"
+import { AddToMovieToMyListProps } from "@/@types"
 import axios from "axios"
 
 async function addToMovieToMyList({
@@ -10,6 +10,14 @@ async function addToMovieToMyList({
     return axios.post(url, { id, email })
 }
 
+async function postUser({ email }: { email: string }) {
+
+    const url = "/api/users"
+
+    return axios.post(url, { email })
+}
+
 export {
-    addToMovieToMyList
+    addToMovieToMyList,
+    postUser
 }

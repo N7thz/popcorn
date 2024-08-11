@@ -16,9 +16,20 @@ export async function POST(request: NextRequest) {
         message: "Email not exist."
     })
 
+    const isMovieExist = await prisma.movie.findUnique({
+        where: {
+            movieId: id.toString()
+        }
+    })
+
+    if (!isMovieExist) return NextResponse.json({
+        message: "Movie already added."
+    })
+
     const movie = await prisma.movie.create({
         data: {
-            id: id.toString()
+            movieId: id.toString(),
+            userId: user.id
         }
     })
 

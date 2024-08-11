@@ -1,16 +1,20 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useSession } from "next-auth/react"
+import { useForm } from "react-hook-form"
+import { useRouter } from "next/navigation"
+import { twMerge } from "tailwind-merge"
 import { ButtonsLogin } from "./button-login"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { Toaster } from "./ui/sonner"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { error } from "console"
-import { twMerge } from "tailwind-merge"
+import { postUser } from "@/hooks/use-service/internal"
+import { z } from "zod"
+import { toast } from "sonner"
+import { CheckCircle, CircleCheck } from "lucide-react"
 
 export const FormCreateUser = () => {
 
@@ -45,6 +49,7 @@ type FormCreateUserCardType = z.infer<typeof FormCreateUserCardSchema>
 export const FormCreateUserCard = () => {
 
     const { data } = useSession()
+    const { back } = useRouter()
 
     const {
         register,
@@ -54,8 +59,6 @@ export const FormCreateUserCard = () => {
         resolver: zodResolver(FormCreateUserCardSchema)
     })
 
-    console.log(errors)
-
     if (!data || !data.user) return <ButtonsLogin />
 
     const { email } = data.user
@@ -63,7 +66,33 @@ export const FormCreateUserCard = () => {
     const isEmailExist = email !== null && email !== undefined
 
     function createUser(data: FormCreateUserCardType) {
-        console.log(data)
+
+        const { email } = data
+
+        postUser({ email })
+            .then(res => {
+                const { status } = res
+
+                console.log(res.data)
+
+                if (status !== 200) return
+
+                toast(
+                    "User created with sucess.",
+                    {
+                        duration: 2000,
+                        style: { fontSize: "18px" },
+                        icon: <CircleCheck
+                            size={24}
+                            className="pr-2"
+                        />,
+            
+                    }
+                )
+
+                setTimeout(back, 3000)
+            })
+            .catch(err => console.log(err))
     }
 
     return (
@@ -90,6 +119,7 @@ export const FormCreateUserCard = () => {
             >
                 Create User
             </Button>
+            <Toaster />
         </form>
     )
 }

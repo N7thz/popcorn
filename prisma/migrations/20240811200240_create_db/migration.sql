@@ -9,7 +9,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "movies" (
     "id" TEXT NOT NULL,
-    "user_id" TEXT,
+    "user_id" TEXT NOT NULL,
 
     CONSTRAINT "movies_pkey" PRIMARY KEY ("id")
 );
@@ -18,4 +18,4 @@ CREATE TABLE "movies" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
-ALTER TABLE "movies" ADD CONSTRAINT "movies_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "movies" ADD CONSTRAINT "movies_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
