@@ -46,10 +46,6 @@ export interface Movie {
     vote_count: number
 }
 
-export interface GetMoviesProps {
-    page?: string
-}
-
 export interface GoogleProps extends ComponentProps<"svg"> {
     size?: number
 }
@@ -204,4 +200,9 @@ export interface Similar {
     video: boolean
     vote_average: number
     vote_count: number
+}
+
+export interface AddToMovieToMyListProps {
+    id: number
+    email: string
 }

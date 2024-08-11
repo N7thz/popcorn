@@ -2,10 +2,9 @@
 
 import { getMovies } from "@/hooks/use-service"
 import { useQuery } from "@tanstack/react-query"
-import { PaginationComponent } from "./pagination"
+import { useParams } from "next/navigation"
 import { CardMovie } from "./card-movie"
 import { Animation } from "./animation"
-import { useParams } from "next/navigation"
 import { LoadingMain } from "./loading-main"
 
 export const Main = () => {
@@ -14,7 +13,7 @@ export const Main = () => {
 
   const { data: movies, isLoading } = useQuery({
     queryKey: ['get-movies'],
-    queryFn: async () => getMovies({ page })
+    queryFn: async () => getMovies(page)
   })
 
   if (!movies || isLoading) return <LoadingMain />

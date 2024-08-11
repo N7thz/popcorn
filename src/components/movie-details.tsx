@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useApplication } from "@/context/application-provider"
 import { useParams } from "next/navigation"
 import { formatDate } from "date-fns"
+import { Globe, Heart } from "lucide-react"
 import {
     Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
 } from "./ui/card"
@@ -17,14 +18,13 @@ import { LoadingDetails } from "./loading-details"
 import { VoteAverage } from "./vote-average"
 import { Cast } from "./cast"
 import { Similar } from "./similar"
-import { Heart } from "lucide-react"
+import { ButtonAddList } from "./button-add-list"
 import Image from "next/image"
 import Link from "next/link"
 
 export const MovieDetails = () => {
 
     const { id } = useParams<{ id: string }>()
-
     const { relativePath } = useApplication()
 
     const { data: result, isLoading } = useQuery({
@@ -98,12 +98,7 @@ export const MovieDetails = () => {
                         </div>
                     </CardContent>
                     <CardFooter className="flex items-center justify-end gap-4">
-                        <Button
-                            variant={"outline"}
-                            className="w-full"
-                        >
-                            Add to my list
-                        </Button>
+                        <ButtonAddList result={result} />
                         <Link
                             href={homepage}
                             target="_blank"
@@ -111,9 +106,10 @@ export const MovieDetails = () => {
                         >
                             <Button
                                 variant={"outline"}
-                                className="w-full"
+                                className="w-full flex items-center gap-2"
                             >
                                 Home page
+                                <Globe className="size-4" />
                             </Button>
                         </Link>
                     </CardFooter>
