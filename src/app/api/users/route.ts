@@ -15,11 +15,14 @@ export async function POST(request: NextRequest) {
         message: "Email alredy exist."
     })
 
+
     const user = await prisma.user.create({
         data: {
             email
         }
     })
+
+    console.log(user)
 
     return NextResponse.json(user)
 }

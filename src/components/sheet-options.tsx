@@ -20,16 +20,18 @@ export const SheetOptions = () => {
 
     const { data } = useSession()
 
-    const url = (data && data.user && data.user.image)
-        ? data.user.image
-        : "https://github.com/shadcn.png"
+    const isImageExist = (data && data.user && data.user.image)
+
+    const urlBase = "https://github.com/shadcn.png"
+
+    const url = isImageExist ? data?.user?.image : urlBase
 
     return (
         <Sheet>
             <SheetTrigger asChild>
                 <Avatar className="cursor-pointer">
                     <AvatarImage
-                        src={url}
+                        src={url ?? "https://github.com/shadcn.png"}
                         alt="@shadcn"
                     />
                     <AvatarFallback>CN</AvatarFallback>

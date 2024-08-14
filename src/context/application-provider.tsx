@@ -9,19 +9,17 @@ import {
     useState
 } from "react"
 
+let statusType: "loading" | "authenticated" | "unauthenticated"
+
 interface ApplicationContextProps {
-    status: "loading" | "authenticated" | "unauthenticated"
-    setStatus: Dispatch<SetStateAction<
-        "loading" | "authenticated" | "unauthenticated"
-    >>
+    status: typeof statusType
+    setStatus: Dispatch<SetStateAction<typeof statusType>>
     relativePath: string
 }
 
 const ApplicationContext = createContext({} as ApplicationContextProps)
 
 export function ApplicationProvider({ children }: { children: ReactNode }) {
-
-    let statusType: "loading" | "authenticated" | "unauthenticated"
 
     const [status, setStatus] = useState<typeof statusType>("unauthenticated")
 

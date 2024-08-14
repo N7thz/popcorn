@@ -1,4 +1,4 @@
-import { addToMovieToMyList } from "@/hooks/use-service/internal"
+import { postToMovieToMyList } from "@/hooks/use-service/internal"
 import { MovieDetails as MovieDetailsProps } from "@/@types"
 import { useRouter } from "next/navigation"
 import { CircleCheck, CopyPlus } from "lucide-react"
@@ -26,11 +26,15 @@ export const ButtonAddList = ({ result }: ButtonAddListProps) => {
 
         if (!email) return push("/create-user")
 
-        addToMovieToMyList({ id, email })
+        postToMovieToMyList({ id, email })
             .then(res => {
                 const { data } = res
 
-                if (data.message === "Email not exist.") push("/create-user")
+                console.log(data)
+
+                if (data.message === "Email not exist.") {
+                    return push("/create-user")
+                }
 
                 toast(
                     "The movie has been successfully added to the list.",

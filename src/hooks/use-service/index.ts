@@ -1,5 +1,5 @@
 import {
-    AddToMovieToMyListProps,
+    postToMovieToMyListProps,
     CastResponse,
     ImagesResponse,
     MovieDetails,
@@ -7,7 +7,6 @@ import {
     ReviewsResponse,
     SimilarResponse
 } from "@/@types"
-import { Movie } from "@prisma/client"
 import axios from "axios"
 
 const token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZjY2MTNiOGFiMTdiOTVlMWQ0ZTIxN2M4MDIxNjg3OCIsInN1YiI6IjY2MDFiZjU4N2Y2YzhkMDE3YzczY2ViZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._kLbBy7CWJi95SqVsNbLjx64ijpSD2iFluDUHoBmDNo"

@@ -4,8 +4,9 @@ import { Card, CardHeader, CardTitle } from "./ui/card"
 import { CardMovieProps } from "@/@types"
 import Image from "next/image"
 import Link from "next/link"
+import { twMerge } from "tailwind-merge"
 
-export const CardMovie = ({ movie }: CardMovieProps) => {
+export const CardMovie = ({ movie, className }: CardMovieProps) => {
 
     const { relativePath } = useApplication()
 
@@ -15,7 +16,10 @@ export const CardMovie = ({ movie }: CardMovieProps) => {
     return (
         <Link href={`/movies/details/${id}`}>
             <Card
-                className="w-[220px] border-none drop-shadow-2xl my-3 relative group rounded-md overflow-hidden cursor-pointer hover:scale-95 duration-100"
+                className={twMerge(
+                    "w-[220px] border-none drop-shadow-2xl my-3 relative group rounded-md overflow-hidden cursor-pointer hover:scale-95 duration-100",
+                    className
+                )}
             >
                 <Image
                     src={url}

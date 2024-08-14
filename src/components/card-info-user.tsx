@@ -1,12 +1,27 @@
 "use client"
 
 import { useSession } from "next-auth/react"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { useQuery } from "@tanstack/react-query"
+import { getUser } from "@/hooks/use-service/internal"
+import { Card, CardHeader, CardTitle } from "./ui/card"
 import { ButtonsLogin } from "./button-login"
+import { MyMoviesList } from "./my-movies-list"
 
 export const CardInfoUser = () => {
 
     const { data } = useSession()
+
+    const email = data?.user?.email
+
+    const { data: user } = useQuery({
+        queryKey: ['get-user'],
+        queryFn: async () =>
+            getUser({ email })
+                .then(res => res?.data)
+                .catch(err => console.log(err))
+    })
+
+    const id = user?.id!
 
     if (!data || !data.user) return <ButtonsLogin />
 
@@ -15,9 +30,7 @@ export const CardInfoUser = () => {
             <CardHeader>
                 <CardTitle>My list:</CardTitle>
             </CardHeader>
-            <CardContent>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi consectetur minima id dignissimos expedita. Necessitatibus asperiores doloremque dicta dolores maxime et, distinctio possimus consequatur iure consectetur nobis eum ut magnam.
-            </CardContent>
+            <MyMoviesList id={id} />
         </Card>
     )
 }

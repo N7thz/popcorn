@@ -56,10 +56,10 @@ export interface AnimationProps extends ComponentProps<"div"> {
     whileInView?: VariantLabels | TargetAndTransition
     exit?: TargetAndTransition | VariantLabels
     transition?: Transition
-    animate?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
+    animate?: AnimationControls | TargetAndTransition | VariantLabels | boolean
 }
 
-export interface CardMovieProps {
+export interface CardMovieProps extends ComponentProps<"div"> {
     movie: Movie
 }
 
@@ -202,7 +202,17 @@ export interface Similar {
     vote_count: number
 }
 
-export interface AddToMovieToMyListProps {
+export interface postToMovieToMyListProps {
     id: number
     email: string
+}
+
+export interface EmailProps {
+    email: string | null | undefined
+}
+
+export interface ContextProps {
+    params: {
+        id: string
+    }
 }
